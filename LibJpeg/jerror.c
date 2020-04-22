@@ -105,7 +105,9 @@ output_message (j_common_ptr cinfo)
 #ifdef USE_WINDOWS_MESSAGEBOX
   /* Display it in a message dialog box */
   MessageBox(GetActiveWindow(), buffer, "JPEG Library Error",
-	     MB_OK | MB_ICONERROR);
+      MB_OK | MB_ICONERROR);
+#elif __ANDROID__
+  // skip as bionic (the Android libc) doesn't contain globally available stderr symbol.
 #else
   /* Send it to stderr, adding a newline */
   fprintf(stderr, "%s\n", buffer);
